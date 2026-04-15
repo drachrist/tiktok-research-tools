@@ -12,7 +12,7 @@ An earlier, more limited version of the data collection approach implemented her
 
 Most social media research tends to focus on keywords and hashtags as the only metrics for locating appropriate content, with engagement metrics serving occasionally serving as a filter. But This vastly underestimates the flexibility provided by the TikTok Research API. This tool provides a point-and-click interface for the full range of TikTok Research API endpoints, making systematic data collection accessible to researchers without extensive programming experience. Features include:
 
-* Accessing video metadata such as AIGC tags, voice-to-text auto-transcription, music ID and other aspects unique to TikTOk.
+* Accessing video metadata such as AIGC tags, voice-to-text auto-transcription, music ID and other aspects unique to TikTok.
 * Accessing comment data, including reply structures that allow recreation of comment threads
 * Accessing TikTok shop data, including item IDs, item descriptions and item reviews
 
