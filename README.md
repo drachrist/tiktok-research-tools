@@ -10,7 +10,7 @@ An earlier, more limited version of the data collection approach implemented her
 
 ## Overview
 
-Most social media research tends to focus on keywords and hashtags as the only metrics for locating appropriate content, with engagement metrics serving occasionally serving as a filter. But This vastly underestimates the flexibility provided by the TikTok Research API. This tool provides a point-and-click interface for the full range of TikTok Research API endpoints, making systematic data collection accessible to researchers without extensive programming experience. Features include:
+Most social media research tends to focus on keywords and hashtags as the only metrics for locating appropriate content, with engagement metrics occasionally serving as a filter. But This vastly underestimates the flexibility provided by the TikTok Research API. This tool provides a point-and-click interface for the full range of TikTok Research API endpoints, making systematic data collection accessible to researchers without extensive programming experience. Features include:
 
 * Accessing video metadata such as AIGC tags, voice-to-text auto-transcription, music ID and other aspects unique to TikTok.
 * Accessing comment data, including reply structures that allow recreation of comment threads
@@ -80,11 +80,11 @@ Query user-level data for a list of accounts:
 - **Liked videos** — paginated
 - **Followers / Following** — paginated (note: these endpoints have a higher daily limit of 20,000 requests)
 
-### 📋 Playlist Info
+### Playlist Info
 
 Retrieve metadata and video IDs for one or more playlists by playlist ID.
 
-### 🛒 TikTok Shop
+### TikTok Shop
 
 Query TikTok Shop data for EU-based shops, including shop info, products, and reviews. Can be run as individual steps or as a single sequential workflow from shop name through to reviews.
 
