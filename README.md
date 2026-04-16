@@ -36,7 +36,7 @@ Open the folder you just unzipped and double-click **run_tiktok_app.bat**. A sma
 
 **Step 4: Enter your credentials**
 
-In the sidebar on the left, enter your TikTok Research API client key and client secret. Optionally, you can click **💾** to save them. You will only need to do this once, as they will be remembered for future sessions. Your credentials are stored only on your own computer and are never shared with anyone (note that sharing your credentials with people outside the specified project team goes against TikTok's ToS and can get your access revoked).
+In the sidebar on the left, enter your TikTok Research API client key and client secret. Optionally, you can click **💾** to save them. You will only need to do this once, as they will be remembered for future sessions. Your credentials are stored only on your own computer and are never shared with anyone (note that sharing your credentials with people outside the specified project team goes against the Research API Terms of Service and can get your access revoked).
 
 You are now ready to collect data.
 
