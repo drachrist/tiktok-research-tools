@@ -1,4 +1,4 @@
-# TikTok Research Tools
+# The TikTok Research Tool
 
 **A simple but powerful tool for collecting TikTok data for academic research, no coding required.**
 
