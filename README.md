@@ -1,102 +1,121 @@
 # TikTok Research Tools
 
-A browser-based interface for collecting data from the [TikTok Research API](https://developers.tiktok.com/products/research-api/), developed as part of the **Influencer Stories** project at the University of Birmingham.
+**A simple but powerful tool for collecting TikTok data for academic research — no coding required.**
 
-Developed by **Dr Alex Christiansen**, University of Birmingham.
+This tool provides a browser-based interface for the [TikTok Research API](https://developers.tiktok.com/products/research-api/), making it straightforward to build systematic datasets from TikTok without needing to write any code. It was developed as part of the **Influencer Stories** project at the University of Birmingham by **Dr Alex Christiansen**.
 
 An earlier, more limited version of the data collection approach implemented here was used in:
 
-> Christiansen, A., Craythorne, S.-L., Crawford, P., Larkin, M., Gohil, A., Strutt, S., & Page, R. (2025). Multimodal Analysis of Stories Told by Mental Health Influencers on TikTok. Health Expectations: An International Journal of Public Participation in Health Care and Health Policy, 28(3), e70226. [https://doi.org/10.1111/hex.70226](https://doi.org/10.1111/hex.70226)
+> Christiansen, A., Craythorne, S.-L., Crawford, P., Larkin, M., Gohil, A., Strutt, S., & Page, R. (2025). Multimodal Analysis of Stories Told by Mental Health Influencers on TikTok. *Health Expectations*, 28(3), e70226. https://doi.org/10.1111/hex.70226
 
-## Overview
+---
 
-Most social media research tends to focus on keywords and hashtags as the only metrics for locating appropriate content, with engagement metrics occasionally serving as a filter. But This vastly underestimates the flexibility provided by the TikTok Research API. This tool provides a point-and-click interface for the full range of TikTok Research API endpoints, making systematic data collection accessible to researchers without extensive programming experience. Features include:
+## **Before You Start**
 
-* Accessing video metadata such as AIGC tags, voice-to-text auto-transcription, music ID and other aspects unique to TikTok.
-* Accessing comment data, including reply structures that allow recreation of comment threads
-* Accessing TikTok shop data, including item IDs, item descriptions and item reviews
+This tool requires an approved **TikTok Research API** account. This is a separate application process run by TikTok, available to academic researchers at eligible institutions. If you do not yet have API access, you can apply at the [TikTok Research API page](https://developers.tiktok.com/products/research-api/). Note that ethical approval from your institution is a standard requirement of the application process and that procuring access can take a while - I'd recommend starting this as early as possible in your project.
 
-## Requirements
+Once you have been approved, TikTok will provide you with a **client key** and **client secret** — two strings of characters that act as your login credentials for the API. You will need these to use this tool.
 
-### TikTok Research API Access
+---
 
-This tool requires an approved TikTok Research API account. Access is available to academic researchers at eligible institutions. To apply, visit the [TikTok Research API page](https://developers.tiktok.com/products/research-api/).
+## Quick Start (Windows)
 
-**You must have your own approved API credentials before using this tool.** The tool does not provide or share API access.
+If you are on a Windows computer, getting started takes four steps:
 
-### Software Requirements
+**Step 1 — Install Python**
 
-- Python 3.8 or higher (Python 3.12 or newer is recommended)
-- The following Python packages: `streamlit`, `requests`
+Python is the programming language this tool runs on. If you do not already have it, download and install it from [python.org](https://www.python.org/downloads/). During installation, make sure to tick the box that says **"Add Python to PATH"** before clicking Install.
 
-Install dependencies with:
+**Step 2 — Download this tool**
+
+Click the green **Code** button at the top of this page, then click **Download ZIP**. Unzip the downloaded file somewhere convenient, such as your Desktop or Documents folder.
+
+**Step 3 — Launch the tool**
+
+Open the folder you just unzipped and double-click **run_tiktok_app.bat**. A small terminal window will appear briefly, and then the tool will open automatically in your web browser. You can minimise the terminal window but do not close it — it needs to stay running in the background to keep the tool working.
+
+**Step 4 — Enter your credentials**
+
+In the sidebar on the left, enter your TikTok Research API client key and client secret. Optionally, you can click **💾** to save them — you will only need to do this once, as they will be remembered for future sessions. Your credentials are stored only on your own computer and are never shared with anyone.
+
+You are now ready to collect data.
+
+---
+
+## Quick Start (Mac or Linux)
+
+**Step 1 — Install Python**
+
+Download and install Python from [python.org](https://www.python.org/downloads/) if you do not already have it. Python 3.8 or higher is required.
+
+**Step 2 — Download this tool**
+
+Click the green **Code** button at the top of this page, then click **Download ZIP**. Unzip the downloaded file somewhere convenient.
+
+**Step 3 — Install dependencies**
+
+Open a Terminal, navigate to the folder you just unzipped, and run:
 
 ```
 pip install streamlit requests
 ```
 
-## Getting Started
+**Step 4 — Launch the tool**
 
-### Windows
-
-Double-click `run_tiktok_app.bat`. This will install any missing dependencies and open the app in your browser automatically.
-
-### Mac / Linux
-
-Open a terminal, navigate to the folder containing the script, and run:
+In the same Terminal window, run:
 
 ```
 streamlit run tiktok_research_app.py
 ```
 
-### Entering Your Credentials
+The tool will open automatically in your web browser.
 
-On first use, enter your TikTok Research API client key and client secret in the sidebar. You can click **Save credentials** to store them locally in a `.env` file so you do not need to re-enter them each session. Credentials are stored only on your machine and are never transmitted anywhere other than to TikTok's authentication endpoint. Make sure to store your credentials somewhere safe and to never share them with anyone.
+**Step 5 — Enter your credentials**
 
-## Features
-
-The tool is organised into five modes, selectable at the top of the interface:
-
-### Collect Video Data
-
-Search for videos using a flexible query builder. Supports:
-- **Account-centric collection** — enter a list of usernames to collect all videos from specific accounts within a date range, with no keyword filtering required
-- **Keyword and hashtag queries** — build complex boolean queries using AND, OR and NOT logic across multiple term groups
-- **Filters** — region, video length, view count, comment count
-
-Note that date ranges longer than 30 days are automatically split into monthly chunks, as required by the API.
-
-### Collect Comment Data
-
-Collect comments for a list of videos. Accepts either a CSV produced by the video collection mode or an uploaded file. Includes:
-- A request budget estimator based on actual comment counts from the video data
-- Optional sampling (by view count, comment count, or random) to manage API usage
-- Parallel fetching to speed up collection
-
-### Collect User Data
-
-Query user-level data for a list of accounts:
-- **Pinned videos** — single request per user
-- **Liked videos** — paginated
-- **Followers / Following** — paginated (note: these endpoints have a higher daily limit of 20,000 requests)
-
-### Playlist Info
-
-Retrieve metadata and video IDs for one or more playlists by playlist ID.
-
-### TikTok Shop
-
-Query TikTok Shop data for EU-based shops, including shop info, products, and reviews. Can be run as individual steps or as a single sequential workflow from shop name through to reviews.
+In the sidebar on the left, enter your TikTok Research API client key and client secret. Optionally, you can click **💾** to save them — you will only need to do this once, as they will be remembered for future sessions. Your credentials are stored only on your own computer and are never shared with anyone.
 
 ---
 
-## Query Presets
+## What Can I Collect?
 
-Frequently used query configurations can be saved as named presets using the sidebar. Presets are stored locally in `tiktok_presets.json`.
+The tool is organised into five modes, selectable at the top of the interface.
 
-## Output
+### Collect Video Data
 
-All data is saved as CSV files to a location you specify. No data is uploaded, shared, or stored remotely.
+This is the core mode of the tool. You can collect video metadata in two ways:
+
+**By account** — enter a list of TikTok usernames and the tool will collect all of their videos within a date range you specify. This is useful when you have identified a set of relevant accounts and want to build a complete dataset of their content. No keywords or hashtags are needed.
+
+**By keyword or hashtag** — build a search query using combinations of keywords and hashtags, joined with AND, OR and NOT logic. This is more similar to how most social media research tools work.
+
+The two approaches can also be combined, e.g. for collecting videos from a set of accounts that also mention a particular keyword. Additionally, a filter can be applied to ensure a minimum level of engagement (likes, shares, comments) to ensure that the data you collect is relevant for your research.
+
+* Video data includes: post date, username, region, video description, auto-generated transcription (voice to text), music ID, like count, comment count, share count, view count, hashtags, AIGC (AI-generated content) labels, and more.
+* Note that the TikTok API only allows queries covering 30 days at a time. If you select a longer date range, the tool handles this automatically by splitting it into monthly chunks.
+
+### Collect Comment Data
+
+Once you have collected video data, you can use this mode to collect the comments on those videos. You can load the video CSV you collected in the previous step, optionally sample it down to a manageable number of videos, and then fetch all available comments. Comment data includes the comment text, like count, timestamp, and reply structure, which allows comment threads to be reconstructed.
+
+The tool shows an estimate of how many API requests a collection run will use before you start, so you can manage your daily allowance (1,000 requests per day, shared across all modes except follower/following requests).
+
+### Collect User Data
+
+Query user-level information for a list of accounts, including their pinned videos, liked videos, followers, and following lists.
+
+### Playlist Info
+
+Retrieve the metadata and full video ID list for one or more TikTok playlists, using the numeric playlist ID from the playlist URL.
+
+### TikTok Shop
+
+Query TikTok Shop data for shops operating in the EU, including shop details, product listings, and customer reviews. Can be run step by step or as a single workflow from shop name through to reviews.
+
+---
+
+## Saving Query Presets
+
+If you have a query you want to run again in future — for example a particular combination of accounts or keywords — you can save it as a named preset using the sidebar. Presets are stored locally in a file called `tiktok_presets.json` in the same folder as the tool.
 
 ---
 
@@ -106,35 +125,43 @@ The TikTok Research API allows **1,000 requests per day** (reset at midnight UTC
 
 For followers and following endpoints, the daily limit is 20,000 requests.
 
-## Terms of Service and Ethics
+---
 
-Use of this tool requires compliance with the [TikTok Research API Terms of Service](https://developers.tiktok.com/doc/research-api-get-started). Key obligations include restrictions on data storage duration, prohibitions on re-identification of users, and limits on commercial use of collected data. Researchers are responsible for ensuring their use of this tool complies with TikTok's terms.
+## Terms of Service and Research Ethics
 
-Researchers should also consult their institution's research ethics board regarding data handling, storage, and any applicable data protection regulations (including GDPR where relevant) before beginning data collection. Note that ethical approval is a default requirement of gaining access to the research API.
+This tool collects data through TikTok's official research infrastructure — no scraping or unofficial access is used. Use of the tool requires compliance with the [TikTok Research API Terms of Service](https://developers.tiktok.com/doc/research-api-get-started), which include restrictions on how long data can be stored, prohibitions on re-identifying individual users, and limits on commercial use. You are responsible for ensuring your research complies with these terms.
 
-The tool collects only publicly available data through TikTok's official research infrastructure. No scraping or unofficial API access is used.
+You should also consult your institution's research ethics board regarding data handling, storage periods, and any applicable data protection regulations (including GDPR where relevant) before beginning data collection. Note that ethical approval is a standard requirement of the TikTok Research API application process itself.
+
+All data collected by this tool is saved locally to your own computer. Nothing is uploaded or shared remotely.
 
 ---
 
 ## Known Limitations
 
-- The Research API returns metadata only — video files and audio cannot be collected
-- Engagement metrics (views, likes etc.) may differ from figures shown on the TikTok platform, as the API uses archived rather than live data. See [Pearson et al. (2024)](https://doi.org/10.1080/1369118X.2024.2420032) for a detailed audit of these discrepancies
-- New videos can take up to 48 hours to appear in API results, limiting the tools applicability in live data collection exercises
-- Some accounts may return errors even when publicly visible; the tool handles these as well as it can and continues collection for remaining accounts - please do let me know if you notice any errors with the handling
-- TikTok Shop data is only available for shops operating in the EU
+- **Metadata only** — the API provides video metadata but not video files or audio. The voice-to-text transcription field provides a text version of spoken content where available
+- **Engagement metric discrepancies** — figures for views, likes and other metrics may differ from what is shown on the TikTok platform, as the API uses archived data. See [Pearson et al. (2024)](https://doi.org/10.1080/1369118X.2024.2420032) for a detailed audit of these discrepancies
+- **Indexing delay** — new videos can take up to 48 hours to appear in API results, which limits applicability for real-time data collection
+- **Unavailable accounts** — some accounts may return errors even when publicly visible. The tool identifies these automatically and continues collecting from the remaining accounts
+- **TikTok Shop** — shop data is only available for shops operating in the EU
 
+---
 ## Citing This Tool
 
-If you use this tool in your research, please cite both the software and the accompanying methods paper (forthcoming):
+If you use this tool in your research, please cite it as:
 
-**Software:**
 > Christiansen, A. (2025). *TikTok Research Tools* [Software]. University of Birmingham. https://github.com/drchristlex/tiktok-research-tools
 
-**Methods paper:** *(forthcoming — citation will be added on publication)*
+A methods paper describing the account-centric corpus construction approach this tool supports is currently in preparation. A citation will be added here on publication.
 
 ---
 
 ## Licence
 
 MIT License — see `LICENSE` for details.
+
+---
+
+## Contact
+
+For questions, bug reports, or feedback, please open an issue on this repository or contact me at a.l.christiansen@bham.ac.uk
