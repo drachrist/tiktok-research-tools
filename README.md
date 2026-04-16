@@ -14,7 +14,7 @@ An earlier, more limited version of the data collection approach implemented her
 
 This tool requires an approved **TikTok Research API** account. This is a separate application process run by TikTok, available to academic researchers at eligible institutions. If you do not yet have API access, you can apply at the [TikTok Research API page](https://developers.tiktok.com/products/research-api/). Note that ethical approval from your institution is a standard requirement of the application process and that procuring access can take a while - I'd recommend starting this as early as possible in your project.
 
-Once you have been approved, TikTok will provide you with a **client key** and **client secret** — two strings of characters that act as your login credentials for the API. You will need these to use this tool.
+Once you have been approved, TikTok will provide you with a **client key** and **client secret**, two strings of characters that act as your login credentials for the API. You will need these to use this tool.
 
 ---
 
@@ -32,7 +32,7 @@ Click the green **Code** button at the top of this page, then click **Download Z
 
 **Step 3: Launch the tool**
 
-Open the folder you just unzipped and double-click **run_tiktok_app.bat**. A small terminal window will appear briefly, and then the tool will open automatically in your web browser. You can minimise the terminal window but do not close it — it needs to stay running in the background to keep the tool working.
+Open the folder you just unzipped and double-click **run_tiktok_app.bat**. A small terminal window will appear briefly, and then the tool will open automatically in your web browser. You can minimise the terminal window but do not close it, it needs to stay running in the background to keep the tool working.
 
 **Step 4: Enter your credentials**
 
@@ -115,7 +115,7 @@ Query TikTok Shop data for shops operating in the EU, including shop details, pr
 
 ## Saving Query Presets
 
-If you have a query you want to run again in future — for example a particular combination of accounts or keywords — you can save it as a named preset using the sidebar. Presets are stored locally in a file called `tiktok_presets.json` in the same folder as the tool.
+If you have a query you want to run again in future, for example a particular combination of accounts or keywords, you can save it as a named preset using the sidebar. Presets are stored locally in a file called `tiktok_presets.json` in the same folder as the tool.
 
 ---
 
@@ -129,9 +129,9 @@ For followers and following endpoints, the daily limit is 20,000 requests.
 
 ## Terms of Service and Research Ethics
 
-This tool collects data through TikTok's official research infrastructure — no scraping or unofficial access is used. Use of the tool requires compliance with the [TikTok Research API Terms of Service](https://developers.tiktok.com/doc/research-api-get-started), which include restrictions on how long data can be stored, prohibitions on re-identifying individual users, and limits on commercial use. You are responsible for ensuring your research complies with these terms.
+This tool collects data through TikTok's official research infrastructure meaning no scraping or unofficial access is used. Use of the tool requires compliance with the [TikTok Research API Terms of Service](https://developers.tiktok.com/doc/research-api-get-started), which include restrictions on how long data can be stored, prohibitions on re-identifying individual users, and limits on commercial use. You are responsible for ensuring your research complies with these terms.
 
-You should also consult your institution's research ethics board regarding data handling, storage periods, and any applicable data protection regulations (including GDPR where relevant) before beginning data collection. Note that ethical approval is a standard requirement of the TikTok Research API application process itself.
+You should also consult your institution's research ethics board regarding data handling, storage periods, and any applicable data protection regulations (including GDPR where relevant) before beginning data collection. Note that ethical approval is also a standard requirement of the TikTok Research API application process itself.
 
 All data collected by this tool is saved locally to your own computer. Nothing is uploaded or shared remotely.
 
