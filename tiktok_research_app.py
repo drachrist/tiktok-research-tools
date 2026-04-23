@@ -1321,7 +1321,6 @@ if mode == "🎬 Collect Video Data":
             col_conn, _ = st.columns([1, 5])
             connectors[i - 1] = col_conn.selectbox(
                 "Connector", ["AND", "OR", "NOT"],
-                index=["AND", "OR", "NOT"].index(connectors[i - 1]),
                 key=f"conn_{i}", label_visibility="collapsed",
             )
             st.markdown("")
@@ -1329,18 +1328,16 @@ if mode == "🎬 Collect Video Data":
         with st.container(border=True):
             col_name, col_field, col_int, col_del = st.columns([2.5, 1.5, 1.5, 0.7])
             group["name"] = col_name.text_input(
-                "Group name", value=group.get("name", f"Group {i+1}"),
+                "Group name",
                 key=f"gname_{i}", label_visibility="collapsed",
                 placeholder=f"Group {i+1} name",
             )
             group["field"] = col_field.selectbox(
                 "Field", ["keyword", "hashtag"],
-                index=0 if group.get("field", "keyword") == "keyword" else 1,
                 key=f"gfield_{i}",
             )
             group["internal_logic"] = col_int.selectbox(
                 "Terms joined by", ["OR", "AND"],
-                index=0 if group.get("internal_logic", "OR") == "OR" else 1,
                 key=f"gint_{i}",
             )
             if col_del.button("✕", key=f"gdel_{i}", help="Remove this group") and len(groups) > 1:
@@ -1352,7 +1349,7 @@ if mode == "🎬 Collect Video Data":
                 st.rerun()
 
             terms_raw = st.text_area(
-                "Terms (one per line)", value="\n".join(group.get("terms", [])),
+                "Terms (one per line)",
                 height=100, key=f"gterms_{i}",
                 placeholder="climate\nenvironment\nnet zero",
             )
