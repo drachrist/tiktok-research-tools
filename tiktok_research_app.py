@@ -1176,22 +1176,58 @@ with st.sidebar:
 
     if selected_preset != "(none)" and st.button("⬆️ Load preset"):
         p = presets[selected_preset]
+        # Store the full preset so pget() can seed all widget default values
         st.session_state["loaded_preset"] = p
+        # Push groups/connectors into session state so the query builder
+        # re-renders with the correct number of rows and correct content
         if "groups" in p:
-            st.session_state.groups = p["groups"]
+            st.session_state.groups = [dict(g) for g in p["groups"]]
         if "connectors" in p:
-            st.session_state.connectors = p["connectors"]
+            st.session_state.connectors = list(p["connectors"])
+        # Deleting widget keys doesn't work - Streamlit restores them from
+        # the frontend value. Instead, directly overwrite each widget key
+        # with the loaded data so the correct values are displayed.
+        for i, g in enumerate(st.session_state.groups):
+            fallback = chr(10).join(g.get("terms", []))
+            st.session_state["gterms_" + str(i)] = fallback
+            st.session_state["gname_" + str(i)] = g.get("name", "Group " + str(i + 1))
+            st.session_state["gfield_" + str(i)] = g.get("field", "keyword")
+            st.session_state["gint_" + str(i)] = g.get("internal_logic", "OR")
+        for i, c in enumerate(st.session_state.connectors):
+            st.session_state["conn_" + str(i + 1)] = c
         st.success(f"Loaded: {selected_preset}")
         st.rerun()
 
     new_preset_name = st.text_input("Save current config as", placeholder="My preset name")
     if st.button("💾 Save preset") and new_preset_name:
-        if "current_config" in st.session_state:
-            presets[new_preset_name] = st.session_state["current_config"]
+        cc = st.session_state.get("current_config", {})
+        preset_to_save = {k: v for k, v in cc.items()
+                         if k not in ("client_key", "client_secret")}
+        # The sidebar renders before the video UI loop, so st.session_state.groups
+        # may not yet have the current widget values written back into it.
+        # Read terms directly from the gterms_* widget keys in session state,
+        # which Streamlit updates immediately when the user edits a text area.
+        groups_snapshot = []
+        for i, g in enumerate(st.session_state.groups):
+            g_copy = dict(g)
+            fallback = chr(10).join(g.get("terms", []))
+            raw = st.session_state.get("gterms_" + str(i), fallback)
+            g_copy["terms"] = [t.strip() for t in raw.splitlines() if t.strip()]
+            g_copy["name"] = st.session_state.get("gname_" + str(i), g.get("name", "Group " + str(i+1)))
+            g_copy["field"] = st.session_state.get("gfield_" + str(i), g.get("field", "keyword"))
+            g_copy["internal_logic"] = st.session_state.get("gint_" + str(i), g.get("internal_logic", "OR"))
+            groups_snapshot.append(g_copy)
+        preset_to_save["groups"] = groups_snapshot
+        preset_to_save["connectors"] = [
+            st.session_state.get(f"conn_{i+1}", st.session_state.connectors[i])
+            for i in range(len(st.session_state.connectors))
+        ]
+        if not preset_to_save.get("start_date"):
+            st.warning("Switch to **Collect Video Data** mode and configure your query before saving a preset.")
+        else:
+            presets[new_preset_name] = preset_to_save
             save_presets(presets)
             st.success(f"Saved: {new_preset_name}")
-        else:
-            st.warning("Fill in the form first.")
 
     if selected_preset != "(none)" and st.button("🗑️ Delete preset"):
         del presets[selected_preset]
@@ -1343,9 +1379,10 @@ if mode == "🎬 Collect Video Data":
             placeholder="C:/Users/you/Desktop/results.csv",
         )
 
+    # current_config is used both for running a collection and as the source for
+    # preset saving. Credentials are kept separate so they are never written to
+    # the presets file.
     current_config = {
-        "client_key": client_key,
-        "client_secret": client_secret,
         "start_date": start_date.strftime("%Y%m%d"),
         "end_date": end_date.strftime("%Y%m%d"),
         "region_codes": region_codes,
@@ -1363,6 +1400,8 @@ if mode == "🎬 Collect Video Data":
         "output_path": output_path,
     }
     st.session_state["current_config"] = current_config
+    # Credentials are kept separate and only used at run time
+    _run_credentials = {"client_key": client_key, "client_secret": client_secret}
 
     # Contextual query guidance
     has_usernames = bool([u.strip() for u in usernames if u.strip()])
